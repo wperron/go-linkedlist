@@ -1,7 +1,7 @@
 package linkedlist
 
 type Node struct {
-	val int
+	val  int
 	Next *Node
 }
 
@@ -11,7 +11,7 @@ type LinkedList struct {
 
 func (l *LinkedList) Push(node *Node) {
 	last := &l.Head
-	for (last.Next != nil) {
+	for last.Next != nil {
 		last = last.Next
 	}
 	last.Next = node
@@ -19,7 +19,7 @@ func (l *LinkedList) Push(node *Node) {
 
 func (l *LinkedList) Pop() Node {
 	last := &l.Head
-	for (last.Next.Next != nil) {
+	for last.Next.Next != nil {
 		last = last.Next
 	}
 	popped := last.Next
@@ -37,4 +37,31 @@ func (l *LinkedList) Shift() Node {
 	last := l.Head
 	l.Head = *l.Head.Next
 	return last
+}
+
+func Merge(l1 *LinkedList, l2 *LinkedList) LinkedList {
+	start := Node{-1, nil}
+	last := &start
+	i, j := &l1.Head, &l2.Head
+	for i != nil && j != nil {
+		if i.val < j.val {
+			last.Next = i
+			last = i
+			i = i.Next
+		} else {
+			last.Next = j
+			last = j
+			j = j.Next
+		}
+	}
+
+	if i != nil {
+		last.Next = i
+	}
+
+	if j != nil {
+		last.Next = j
+	}
+
+	return LinkedList{*start.Next}
 }
