@@ -39,6 +39,16 @@ func (l *LinkedList) Shift() Node {
 	return last
 }
 
+func (l *LinkedList) InsertAfter(ref *Node, newNode *Node) {
+	if ref.Next == nil {
+		ref.Next = newNode
+	} else {
+		tmp := ref.Next
+		ref.Next = newNode
+		ref.Next.Next = tmp
+	}
+}
+
 func Merge(l1 *LinkedList, l2 *LinkedList) LinkedList {
 	start := Node{-1, nil}
 	last := &start

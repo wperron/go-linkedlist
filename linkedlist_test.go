@@ -46,6 +46,29 @@ func TestLinkedList(t *testing.T) {
 	}
 }
 
+func TestInsertAfter(t *testing.T) {
+	n1 := Node{1, nil}
+	n2 := Node{2, nil}
+	n3 := Node{3, nil}
+	n4 := Node{4, nil}
+
+	n1.Next = &n2
+	n2.Next = &n3
+	n3.Next = &n4
+
+	linked := LinkedList{n1}
+
+	linked.InsertAfter(&n2, &Node{100, nil})
+
+	last := &linked.Head
+	for last != nil {
+		if last.val == 2 && last.Next.val != 100 {
+			t.Errorf("Expected 100 to come after 2, got %d\n", last.Next.val)
+		}
+		last = last.Next
+	}
+}
+
 func TestMerge(t *testing.T) {
 	n1, n2, n3, n4 := Node{1, nil}, Node{3, nil}, Node{4, nil}, Node{7, nil}
 	n1.Next = &n2
